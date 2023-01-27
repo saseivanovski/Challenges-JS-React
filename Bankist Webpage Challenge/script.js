@@ -41,44 +41,18 @@ document.addEventListener('keydown', function (e) {
 btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
-
   console.log(e.target.getBoundingClientRect());
-
   console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
-
   console.log(
     'height/width viewport',
     document.documentElement.clientHeight,
     document.documentElement.clientWidth
   );
-
-  // Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.pageXOffset,
-  //   s1coords.top + window.pageYOffset
-  // );
-
-  // window.scrollTo({
-  //   left: s1coords.left + window.pageXOffset,
-  //   top: s1coords.top + window.pageYOffset,
-  //   behavior: 'smooth',
-  // });
-
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 ///////////////////////////////////////
 // Page navigation
-
-// document.querySelectorAll('.nav__link').forEach(function (el) {
-//   el.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     const id = this.getAttribute('href');
-//     console.log(id);
-//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-//   });
-// });
-
 // Event Delegation
 // 1. Add event listener to common parent element
 // 2. Determine what element originated the event
@@ -95,21 +69,17 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 ///////////////////////////////////////
 // Tabbed component
-// again using Event Delegation
+// Again using Event Delegation
 
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
-
   // Guard clause
   if (!clicked) return;
-
   // Remove active classes
   tabs.forEach(t => t.classList.remove('operations__tab--active'));
   tabsContent.forEach(c => c.classList.remove('operations__content--active'));
-
   // Activate tab
   clicked.classList.add('operations__tab--active');
-
   // Activate content area
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
@@ -123,7 +93,6 @@ const handleHover = function (e) {
     const link = e.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
     const logo = link.closest('.nav').querySelector('img');
-
     siblings.forEach(el => {
       if (el !== link) el.style.opacity = this;
     });
@@ -144,7 +113,6 @@ const navHeight = nav.getBoundingClientRect().height;
 const stickyNav = function (entries) {
   const [entry] = entries;
   // console.log(entry);
-
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 };
@@ -163,9 +131,7 @@ const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-
   if (!entry.isIntersecting) return;
-
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
 };
@@ -185,16 +151,12 @@ const imgTargets = document.querySelectorAll('img[data-src]');
 
 const loadImg = function (entries, observer) {
   const [entry] = entries;
-
   if (!entry.isIntersecting) return;
-
   // Replace src with data-src
   entry.target.src = entry.target.dataset.src;
-
   entry.target.addEventListener('load', function () {
     entry.target.classList.remove('lazy-img');
   });
-
   observer.unobserve(entry.target);
 };
 
@@ -213,10 +175,8 @@ const slider = function () {
   const btnLeft = document.querySelector('.slider__btn--left');
   const btnRight = document.querySelector('.slider__btn--right');
   const dotContainer = document.querySelector('.dots');
-
   let curSlide = 0;
   const maxSlide = slides.length;
-
   // Functions
   const createDots = function () {
     slides.forEach(function (_, i) {
@@ -231,7 +191,6 @@ const slider = function () {
     document
       .querySelectorAll('.dots__dot')
       .forEach(dot => dot.classList.remove('dots__dot--active'));
-
     document
       .querySelector(`.dots__dot[data-slide="${slide}"]`)
       .classList.add('dots__dot--active');
@@ -250,7 +209,6 @@ const slider = function () {
     } else {
       curSlide++;
     }
-
     goToSlide(curSlide);
     activateDot(curSlide);
   };
@@ -268,7 +226,6 @@ const slider = function () {
   const init = function () {
     goToSlide(0);
     createDots();
-
     activateDot(0);
   };
   init();
